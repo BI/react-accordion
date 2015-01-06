@@ -8,16 +8,15 @@
 <body>
   <div id="content"></div>
   <script type="text/jsx">
-    var data =
-    [
-      { text:"AccordionTab 1", children:[{text:"Child 1"}, {text:"Child 2"}]}
-      ,{ text:"AccordionTab 2", children:[{text:"Child 3"}, {text:"Child 4"}, {text:"Child 5"}]}
-      ,{ text:"AccordionTab 3", children:[{text:"Child 6"}, {text:"Child 7"}]}
-      ,{ text:"AccordionTab 4", children:[{text:"Child 8"}, {text:"Child 9"}, {text:"Child 10"}]}
+    var data = [
+      { text:"AccordionTab 1", children:[{text:"Child 1"}, {text:"Child 2"}]},
+      { text:"AccordionTab 2", children:[{text:"Child 3"}, {text:"Child 4"}, {text:"Child 5"}]},
+      { text:"AccordionTab 3", children:[{text:"Child 6"}, {text:"Child 7"}]}
+      { text:"AccordionTab 4", children:[{text:"Child 8"}, {text:"Child 9"}, {text:"Child 10"}]},
     ]
 
     React.render(
-      <Accordion data={data}/>,
+      <Accordion data={data}/,
       document.getElementById('content')
     );
   </script>
