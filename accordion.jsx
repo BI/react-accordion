@@ -1,54 +1,73 @@
-    var Accordion = React.createClass({
-      getInitialState: function() {
-        return { expanded: null };
-      },
-      toggleTabs: function(expandedTabId) {
-        this.setState({expanded:expandedTabId});
-      },
-      render: function() {
-        var self = this;
-        var clickHandler = this.toggleTabs;
-        var accordionTabs = this.props.data.map(function (tab, id) {
-          return (
-            <AccordionTab data={tab} onTabClick={clickHandler} id={id} expanded={self.state.expanded == id}/>
-          );
-        });
-        
-        return (
-          <div className="accordion"> {accordionTabs}
-          </div>
-        );
-      }
-    });
+var Accordion = React.createClass({
+  getInitialState: function() {
+    return { expanded: null };
+  },
+  toggleTabs: function(expandedTabId) {
+    this.setState({ expanded: expandedTabId });
+  },
+  render: function() {
+    var clickHandler = this.toggleTabs;
+    var sections = this.props.children.map(function (section, id) {
+      return (
+        <Section clickHandler={clickHandler} id={id} expanded={this.state.expanded == id}>
+        	{section.props.children}
+        </Section>
+      );
+    }, this);
+    
+    return (
+      <div className="accordion">
+      	{sections}
+      </div>
+    );
+  }
+});
 
-    var AccordionTab = React.createClass({
-      tabClicked: function () {
-        var newState = null;
-        if(!this.props.expanded) {
-          newState = this.props.id
-        }
+var Section = React.createClass({
+  render: function() {
+  	var headerChildren;
 
-        this.props.onTabClick(newState)
-      },
-      render: function() {
-        var listItems = this.props.data.children.map(function (tab) {
-          return (
-            <ListItem data={tab}/>
-          );
-        });
+  	//[].find only works in Firefox, not Chrome
+  	this.props.children.forEach(function (element) {
+  		if(element.type.displayName == "Heading") {
+  			headerChildren = element.props.children;
+  		}
+  	});
 
-        return (
-          <div className="accordionTab">
-            <div className="tabHeader" onClick={this.tabClicked}>{this.props.data.text}</div> { this.props.expanded ? <div ref="list">{listItems}</div> : null }
-          </div>
-        )
-      }
-    });
+  	var content = this.props.children.filter(function (element) {
+  		return element.type.displayName == "Content";
+  	});
 
-    var ListItem = React.createClass({
-      render: function() {
-        return (
-          <div className="listItem">{this.props.data.text}</div>
-        )
-      }
-    });
+    return (
+      <div className="accordion-section">
+        <Heading clickHandler={this.props.clickHandler} id={this.props.id} expanded={this.props.expanded}>{headerChildren}</Heading>
+        { this.props.expanded ? content : null }
+      </div>
+    )
+  
+}
+});
+
+var Heading = React.createClass({
+  tabClicked: function () {
+    var newState = null;
+    if(!this.props.expanded) {
+      newState = this.props.id
+    }
+
+    this.props.clickHandler(newState)
+  },
+  render: function() {
+    return (
+      <div className="accordion-heading" onClick={this.tabClicked}>{this.props.children}</div>
+    )
+  }
+});
+
+var Content = React.createClass({
+  render: function() {
+    return (
+      <div className="accordion-content">{this.props.children}</div>
+    )
+  }
+});
