@@ -1,6 +1,5 @@
 react-accordion
 ===============
---------------------------------------------------------------------
 Accordion-style list component made in React. Allows for grouping data by sections and showing only some sections at a time.
 
 Usage
