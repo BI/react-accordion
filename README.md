@@ -6,37 +6,20 @@ Accordion-style list component made in React. Allows for signle-level list items
 Usage
 -----
 
-Pass a heirarchical FIll out the Accordion's child components. Example:
+Fill out the Accordion's child components. Example:
 
     <Accordion>
       <Section>
-        <Heading>Accordion Tab 1</Heading>
+        <Heading>Accordion Section 1</Heading>
         <Content>
           <p>Some text Content in a paragraph</p>
           <button>Button 1</button>
         </Content>
-        <Content>
-          <p>Some more text Content in a paragraph</p>
-          <button>Button 2</button>
-        </Content>
-        <Content>
-          <p>Even more text Content in a paragraph</p>
-          <button>Button 3</button>
-        </Content>
       </Section>
       <Section>
-        <Heading>Accordion Tab 2 <button>Activate Foo</button><button>Activate Bar</button></Heading>
+        <Heading>Accordion Section 2 <button>Activate Foo</button><button>Activate Bar</button></Heading>
         <Content>
-          Just some text content for Accordion Tab 2. Nothing to see here.
-        </Content>
-        <Content>
-          Just some more text content for Accordion Tab 2. Nothing to see here.
-        </Content>
-        <Content>
-          This is also text content for Accordion Tab 2. Nothing to see here.
-          <Content>
-            This is Recursive text content (content inside text content)!
-          </Content>
+          Just some text content for Accordion Section 2. Nothing to see here.
         </Content>
       </Section>
     </Accordion>
@@ -51,23 +34,19 @@ Main component. Makes multiple Sections.
 
 ### Section ###
 
-Contains a single heading and multiple contents. Represents one accordion tab.
-
-If you put more than one heading, only the last will be used.
+Contains a single heading and a signle content. Represents one accordion section, expandable by clicking on the heading.
 
 **Class Name:** accordion-section
 
 ### Heading ###
 
-Represents the accordion heading, the thing you click on to expand/contract the accordion.
+Represents the accordion heading, the thing you click on to expand the accordion section.
 
 **Class Name:** accordion-heading
 
 ### Content ###
 
-The main content. Each elements represents one item under a tab. You can nest content tags in each other.
-
-Currently just displays, nothing happens when you click on it yet.
+The main content under a section.
 
 **Class Name:** accordion-content
 
@@ -76,5 +55,5 @@ To Do
 
 * Better (i.e. any) error handling
 * Content does something when you click on it
-* Fix clicking buttons in the Heading closing the accordion tab
+* Fix clicking buttons in the Heading closing the accordion section
 * Allow buttons in tags to do something when you click on them
