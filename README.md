@@ -1,7 +1,7 @@
-React Accordion
+react-accordion
 ===============
-
-Accordion-style list component made in React. Allows for signle-level list items under each accordion tab.
+--------------------------------------------------------------------
+Accordion-style list component made in React. Allows for grouping data by sections and showing only some sections at a time.
 
 Usage
 -----
@@ -26,11 +26,32 @@ Fill out the Accordion's child components. Example:
 
 Components
 ----------
+
 ### Accordion ###
 
-Main component. Makes multiple Sections.
+Main component; contains multiple Sections (and only Sections). Has first section expanded by default.
 
 **Class Name:** accordion
+
+#### Optional Properties ####
+
+##### expandMode #####
+
+**Type:** Enum (number)  
+**Default:** Accordion.ALWAYS_ONE  
+**Example:** `<Accordion expandMode={Accordion.ONE_OR_NONE}>`
+
+* **Accordion.ONE\_OR\_NONE:** Allows up to one section to be expanded at a time. All sections may be closed.
+* **Accordion.ALWAYS_ONE:** Allows one section to be expanded. You may not close all expanded sections.
+* **Accordion.MULTIPLE:** Any number of sections can be expaned or closed.
+
+##### expandedSection #####
+
+**Type:** number  
+**Default:** 0  
+**Example:** `<Accordion expandedSection={1}>`
+
+The zero-based index of the section to have open as the first section
 
 ### Section ###
 
@@ -53,7 +74,6 @@ The main content under a section.
 To Do
 -----
 
-* Better (i.e. any) error handling
 * Content does something when you click on it
 * Fix clicking buttons in the Heading closing the accordion section
 * Allow buttons in tags to do something when you click on them

@@ -7,14 +7,35 @@ function getElementType(element) {
 }
 
 var Accordion = React.createClass({
-  getInitialState: function() {
-    return { expanded: null };
+  propTypes: {
+    expandMode: React.PropTypes.number,
+    expandedSection: React.PropTypes.number
   },
-  expandSections: function(expandedSectionId) {
-    this.setState({ expanded: expandedSectionId });
+  getDefaultProps: function() {
+    return {
+      expandMode: 1, //Accordion.ALWAYS_ONE
+      expandedSection: 0
+    };
+  },
+  getInitialState: function() {
+    expanded = {};
+    expanded[this.props.expandedSection] = true;
+    return { expanded: expanded };
+  },
+  expandSections: function(expandedSectionId, isExpanded) {
+    var expanded = this.state.expanded;
+    var expandMode = this.props.expandMode;
+
+    if(expandMode === Accordion.ALWAYS_ONE || expandMode === Accordion.ONE_OR_NONE) {
+      expanded = {};
+    }
+
+    expanded[expandedSectionId] = isExpanded;
+
+    this.setState({ expanded: expanded });
   },
   handleErrors: function() {
-    if(this.props.children == null || this.props.children.length == 0) {
+    if(this.props.children === null || this.props.children.length === 0) {
       throw new Error("No elements found in Accordion");
     }
 
@@ -32,7 +53,7 @@ var Accordion = React.createClass({
       }
     });
 
-    if(errors != "") {
+    if(errors !== "") {
       throw new Error(errors);
     }
   },
@@ -47,7 +68,7 @@ var Accordion = React.createClass({
 
     var sections = children.map(function (section, id) {
       return (
-        <Section clickHandler={this.expandSections} id={id} expanded={this.state.expanded == id}>
+        <Section clickHandler={this.expandSections} id={id} expanded={this.state.expanded[id]} expandMode={this.props.expandMode}>
         	{section.props.children}
         </Section>
       );
@@ -61,12 +82,16 @@ var Accordion = React.createClass({
   }
 });
 
+Accordion.ONE_OR_NONE = 0;
+Accordion.ALWAYS_ONE = 1;
+Accordion.MULTIPLE = 2;
+
 var Section = React.createClass({
   handleErrors: function() {
     var errors = "";
 
     var id = this.props.id;
-    
+
     if(this.props.children == null || this.props.children.constructor !== Array) {
       throw new Error("Too few elements in Section " + id + ". Expected 2: 'Heading' followed by 'Content'");
     }
@@ -97,7 +122,7 @@ var Section = React.createClass({
 
     return (
       <div className="accordion-section">
-        <Heading clickHandler={this.props.clickHandler} id={this.props.id} expanded={this.props.expanded}>{heading.props.children}</Heading>
+        <Heading clickHandler={this.props.clickHandler} id={this.props.id} expanded={this.props.expanded} expandMode={this.props.expandMode}>{heading.props.children}</Heading>
         { this.props.expanded ? content : null }
       </div>
     )
@@ -107,12 +132,20 @@ var Section = React.createClass({
 
 var Heading = React.createClass({
   headingClicked: function () {
-    var newState = null;
-    if(!this.props.expanded) {
-      newState = this.props.id
+    var expanded = this.props.expanded;
+    var id = this.props.id;
+    var expandMode = this.props.expandMode;
+
+    if(!expanded) {
+      this.props.clickHandler(id, true);
+      return;
+    }
+    
+    if(expandMode == Accordion.ALWAYS_ONE) {
+      return;
     }
 
-    this.props.clickHandler(newState)
+    this.props.clickHandler(id, false);
   },
   render: function() {
     return (
