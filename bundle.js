@@ -53,35 +53,26 @@
 	var Content = RxAccordion.Content;
 
 	React.render(
-	  React.createElement(Accordion, null, 
+	  React.createElement(Accordion, {expandMode: Accordion.ONE_OR_NONE, expandedSection: 1}, 
 	    React.createElement(Section, null, 
-	      React.createElement(Heading, null, "Accordion Tab 1"), 
+	      React.createElement(Heading, null, "Accordion Section 1"), 
 	      React.createElement(Content, null, 
 	        React.createElement("p", null, "Some text Content in a paragraph"), 
 	        React.createElement("button", null, "Button 1")
-	      ), 
-	      React.createElement(Content, null, 
-	        React.createElement("p", null, "Some more text Content in a paragraph"), 
-	        React.createElement("button", null, "Button 2")
-	      ), 
-	      React.createElement(Content, null, 
-	        React.createElement("p", null, "Even more text Content in a paragraph"), 
-	        React.createElement("button", null, "Button 3")
 	      )
 	    ), 
 	    React.createElement(Section, null, 
-	      React.createElement(Heading, null, "Accordion Tab 2 ", React.createElement("button", null, "Activate Foo"), React.createElement("button", null, "Activate Bar")), 
+	      React.createElement(Heading, null, "Accordion Section 2 ", React.createElement("button", null, "Activate Foo"), React.createElement("button", null, "Activate Bar")), 
 	      React.createElement(Content, null, 
-	        "Just some text content for Accordion Tab 2. Nothing to see here."
-	      ), 
+	        "Just some text content for Accordion Section 2. Nothing to see here."
+	      )
+	    ), 
+	    React.createElement(Section, null, 
+	      React.createElement(Heading, null, "Accordion Section 3"), 
 	      React.createElement(Content, null, 
-	        "Just some more text content for Accordion Tab 2. Nothing to see here."
-	      ), 
-	      React.createElement(Content, null, 
-	        "This is also text content for Accordion Tab 2. Nothing to see here.", 
-	        React.createElement(Content, null, 
-	          "This is Recursive text content (content inside text content)!"
-	        )
+	        React.createElement("div", null, "Some text Content in a div"), 
+	        React.createElement("div", null, "Some more text Content in a div"), 
+	        React.createElement("div", null, "Even more text Content in a div")
 	      )
 	    )
 	  ),
@@ -95,18 +86,77 @@
 
 	__webpack_require__(4);
 
+	function isElementType(element, expectedType) {
+	  return getElementType(element) == expectedType;
+	}
+
+	function getElementType(element) {
+	  return element.type.displayName;
+	}
+
 	var Accordion = React.createClass({displayName: "Accordion",
-	  getInitialState: function() {
-	    return { expanded: null };
+	  propTypes: {
+	    expandMode: React.PropTypes.number,
+	    expandedSection: React.PropTypes.number
 	  },
-	  toggleTabs: function(expandedTabId) {
-	    this.setState({ expanded: expandedTabId });
+	  getDefaultProps: function() {
+	    return {
+	      expandMode: 1, //Accordion.ALWAYS_ONE
+	      expandedSection: 0
+	    };
+	  },
+	  getInitialState: function() {
+	    expanded = {};
+	    expanded[this.props.expandedSection] = true;
+	    return { expanded: expanded };
+	  },
+	  expandSections: function(expandedSectionId, isExpanded) {
+	    var expanded = this.state.expanded;
+	    var expandMode = this.props.expandMode;
+
+	    if(expandMode === Accordion.ALWAYS_ONE || expandMode === Accordion.ONE_OR_NONE) {
+	      expanded = {};
+	    }
+
+	    expanded[expandedSectionId] = isExpanded;
+
+	    this.setState({ expanded: expanded });
+	  },
+	  handleErrors: function() {
+	    if(this.props.children === null || this.props.children.length === 0) {
+	      throw new Error("No elements found in Accordion");
+	    }
+
+	    var errors = "";
+
+	    var children = this.props.children;
+
+	    if(children.constructor !== Array) {
+	      children = [children];
+	    }
+	    
+	    children.forEach(function(child) {
+	      if(!isElementType(child, "Section")) {
+	        errors += "Found " + getElementType(child) + " element in Accordion. All elements should be 'Section'\r\n";
+	      }
+	    });
+
+	    if(errors !== "") {
+	      throw new Error(errors);
+	    }
 	  },
 	  render: function() {
-	    var clickHandler = this.toggleTabs;
-	    var sections = this.props.children.map(function (section, id) {
+	    this.handleErrors();
+
+	    var children = this.props.children;
+
+	    if(children.constructor !== Array) {
+	      children = [children];
+	    }
+
+	    var sections = children.map(function (section, id) {
 	      return (
-	        React.createElement(Section, {clickHandler: clickHandler, id: id, expanded: this.state.expanded == id}, 
+	        React.createElement(Section, {clickHandler: this.expandSections, id: id, expanded: this.state.expanded[id], expandMode: this.props.expandMode}, 
 	        	section.props.children
 	        )
 	      );
@@ -120,24 +170,47 @@
 	  }
 	});
 
+	Accordion.ONE_OR_NONE = 0;
+	Accordion.ALWAYS_ONE = 1;
+	Accordion.MULTIPLE = 2;
+
 	var Section = React.createClass({displayName: "Section",
+	  handleErrors: function() {
+	    var errors = "";
+
+	    var id = this.props.id;
+
+	    if(this.props.children == null || this.props.children.constructor !== Array) {
+	      throw new Error("Too few elements in Section " + id + ". Expected 2: 'Heading' followed by 'Content'");
+	    }
+	    else if(this.props.children.length > 2) {
+	      throw new Error("Too many elements (" + this.props.children.length + ") in Section " + id + ". Expected 2: 'Heading' followed by 'Content'");
+	    }
+
+	    var expectedHeading = this.props.children[0];
+	    var expectedContent = this.props.children[1];
+
+	    if(!isElementType(expectedHeading, "Heading")) {
+	      errors += "First element in Section " + id + " was type " + getElementType(expectedHeading) + ", expected 'Heading'\r\n";
+	    }
+
+	    if(!isElementType(expectedContent, "Content")) {
+	      errors += "Second element in Section " + id + " was type " + getElementType(expectedContent) + ", expected 'Content'\r\n";
+	    }
+
+	    if(errors != "") {
+	      throw new Error(errors);
+	    }
+	  },
 	  render: function() {
-	  	var headerChildren;
+	    this.handleErrors();
 
-	  	//[].find only works in Firefox, not Chrome
-	  	this.props.children.forEach(function (element) {
-	  		if(element.type.displayName == "Heading") {
-	  			headerChildren = element.props.children;
-	  		}
-	  	});
-
-	  	var content = this.props.children.filter(function (element) {
-	  		return element.type.displayName == "Content";
-	  	});
+	  	var heading = this.props.children[0];
+	    var content = this.props.children[1];
 
 	    return (
 	      React.createElement("div", {className: "accordion-section"}, 
-	        React.createElement(Heading, {clickHandler: this.props.clickHandler, id: this.props.id, expanded: this.props.expanded}, headerChildren), 
+	        React.createElement(Heading, {clickHandler: this.props.clickHandler, id: this.props.id, expanded: this.props.expanded, expandMode: this.props.expandMode}, heading.props.children), 
 	         this.props.expanded ? content : null
 	      )
 	    )
@@ -146,17 +219,25 @@
 	});
 
 	var Heading = React.createClass({displayName: "Heading",
-	  tabClicked: function () {
-	    var newState = null;
-	    if(!this.props.expanded) {
-	      newState = this.props.id
+	  headingClicked: function () {
+	    var expanded = this.props.expanded;
+	    var id = this.props.id;
+	    var expandMode = this.props.expandMode;
+
+	    if(!expanded) {
+	      this.props.clickHandler(id, true);
+	      return;
+	    }
+	    
+	    if(expandMode == Accordion.ALWAYS_ONE) {
+	      return;
 	    }
 
-	    this.props.clickHandler(newState)
+	    this.props.clickHandler(id, false);
 	  },
 	  render: function() {
 	    return (
-	      React.createElement("div", {className: "accordion-heading", onClick: this.tabClicked}, this.props.children)
+	      React.createElement("div", {className: "accordion-heading", onClick: this.headingClicked}, this.props.children)
 	    )
 	  }
 	});
@@ -173,6 +254,7 @@
 	module.exports.Section = Section;
 	module.exports.Heading = Heading;
 	module.exports.Content = Content;
+
 
 /***/ },
 
@@ -204,7 +286,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(31)();
-	exports.push([module.id, ".accordion {\r\n\tborder: 1px black solid;\r\n\tborder-radius: 5px;\r\n\tpadding: 5px;\r\n\twidth: 600px;\r\n}\r\n\r\n.accordion-heading {\r\n\tborder: 1px black solid;\r\n\tborder-radius: 10px;\r\n\tpadding: 1px 5px;\r\n}\r\n\r\n.accordion-content {\r\n\tborder: 1px black solid;\r\n\tborder-radius: 10px;\r\n\tpadding: 5px;\r\n}", ""]);
+	exports.push([module.id, ".accordion {\r\n\tborder: 1px black dashed;\r\n\tborder-radius: 5px;\r\n\tpadding: 5px;\r\n\twidth: 600px;\r\n}\r\n\r\n.accordion-heading {\r\n\tborder: 1px white solid;\r\n\tbackground-color: black;\r\n\tcolor: white;\r\n\tborder-radius: 10px;\r\n\tpadding: 1px 5px;\r\n}\r\n\r\n.accordion-content {\r\n\tborder: 1px black solid;\r\n\tborder-radius: 10px;\r\n\tpadding: 10px;\r\n}", ""]);
 
 /***/ },
 

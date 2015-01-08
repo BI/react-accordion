@@ -1,80 +1,78 @@
-React Accordion
+react-accordion
 ===============
-
-Accordion-style list component made in React. Allows for signle-level list items under each accordion tab.
+Accordion-style list component made in React. Allows for grouping data by sections and showing only some sections at a time.
 
 Usage
 -----
 
-Pass a heirarchical FIll out the Accordion's child components. Example:
+Fill out the Accordion's child components. Example:
 
     <Accordion>
       <Section>
-        <Heading>Accordion Tab 1</Heading>
+        <Heading>Accordion Section 1</Heading>
         <Content>
           <p>Some text Content in a paragraph</p>
           <button>Button 1</button>
         </Content>
-        <Content>
-          <p>Some more text Content in a paragraph</p>
-          <button>Button 2</button>
-        </Content>
-        <Content>
-          <p>Even more text Content in a paragraph</p>
-          <button>Button 3</button>
-        </Content>
       </Section>
       <Section>
-        <Heading>Accordion Tab 2 <button>Activate Foo</button><button>Activate Bar</button></Heading>
+        <Heading>Accordion Section 2 <button>Activate Foo</button><button>Activate Bar</button></Heading>
         <Content>
-          Just some text content for Accordion Tab 2. Nothing to see here.
-        </Content>
-        <Content>
-          Just some more text content for Accordion Tab 2. Nothing to see here.
-        </Content>
-        <Content>
-          This is also text content for Accordion Tab 2. Nothing to see here.
-          <Content>
-            This is Recursive text content (content inside text content)!
-          </Content>
+          Just some text content for Accordion Section 2. Nothing to see here.
         </Content>
       </Section>
     </Accordion>
 
 Components
 ----------
+
 ### Accordion ###
 
-Main component. Makes multiple Sections.
+Main component; contains multiple Sections (and only Sections). Has first section expanded by default.
 
 **Class Name:** accordion
 
+#### Optional Properties ####
+
+##### expandMode #####
+
+**Type:** Enum (number)  
+**Default:** Accordion.ALWAYS_ONE  
+**Example:** `<Accordion expandMode={Accordion.ONE_OR_NONE}>`
+
+* **Accordion.ONE\_OR\_NONE:** Allows up to one section to be expanded at a time. All sections may be closed.
+* **Accordion.ALWAYS_ONE:** Allows one section to be expanded. You may not close all expanded sections.
+* **Accordion.MULTIPLE:** Any number of sections can be expaned or closed.
+
+##### expandedSection #####
+
+**Type:** number  
+**Default:** 0  
+**Example:** `<Accordion expandedSection={1}>`
+
+The zero-based index of the section to have open as the first section
+
 ### Section ###
 
-Contains a single heading and multiple contents. Represents one accordion tab.
-
-If you put more than one heading, only the last will be used.
+Contains a single heading and a signle content. Represents one accordion section, expandable by clicking on the heading.
 
 **Class Name:** accordion-section
 
 ### Heading ###
 
-Represents the accordion heading, the thing you click on to expand/contract the accordion.
+Represents the accordion heading, the thing you click on to expand the accordion section.
 
 **Class Name:** accordion-heading
 
 ### Content ###
 
-The main content. Each elements represents one item under a tab. You can nest content tags in each other.
-
-Currently just displays, nothing happens when you click on it yet.
+The main content under a section.
 
 **Class Name:** accordion-content
 
 To Do
 -----
 
-* Better (i.e. any) error handling
 * Content does something when you click on it
 * Fix clicking buttons in the Heading closing the accordion tab
 * Allow buttons in tags to do something when you click on them
@@ -94,3 +92,5 @@ Notes on Webpack
   * `webpack-dev-server` to run it. You can include flags, but `--watch` is automatically included.
   * Changes should automatically update the page.
   * go to http://localhost:8080/webpack-dev-server/bundle to look at the webserver page.
+* Fix clicking buttons in the Heading closing the accordion section
+* Allow buttons in tags to do something when you click on them

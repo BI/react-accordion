@@ -6,35 +6,26 @@ var Heading = RxAccordion.Heading;
 var Content = RxAccordion.Content;
 
 React.render(
-  <Accordion>
+  <Accordion expandMode={Accordion.ONE_OR_NONE} expandedSection={1}>
     <Section>
-      <Heading>Accordion Tab 1</Heading>
+      <Heading>Accordion Section 1</Heading>
       <Content>
         <p>Some text Content in a paragraph</p>
         <button>Button 1</button>
       </Content>
+    </Section>
+    <Section>
+      <Heading>Accordion Section 2 <button>Activate Foo</button><button>Activate Bar</button></Heading>
       <Content>
-        <p>Some more text Content in a paragraph</p>
-        <button>Button 2</button>
-      </Content>
-      <Content>
-        <p>Even more text Content in a paragraph</p>
-        <button>Button 3</button>
+        Just some text content for Accordion Section 2. Nothing to see here.
       </Content>
     </Section>
     <Section>
-      <Heading>Accordion Tab 2 <button>Activate Foo</button><button>Activate Bar</button></Heading>
+      <Heading>Accordion Section 3</Heading>
       <Content>
-        Just some text content for Accordion Tab 2. Nothing to see here.
-      </Content>
-      <Content>
-        Just some more text content for Accordion Tab 2. Nothing to see here.
-      </Content>
-      <Content>
-        This is also text content for Accordion Tab 2. Nothing to see here.
-        <Content>
-          This is Recursive text content (content inside text content)!
-        </Content>
+        <div>Some text Content in a div</div>
+        <div>Some more text Content in a div</div>
+        <div>Even more text Content in a div</div>
       </Content>
     </Section>
   </Accordion>,
