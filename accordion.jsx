@@ -1,3 +1,5 @@
+require("./webpack-files/accordion-styles.css");
+
 var Accordion = React.createClass({
   getInitialState: function() {
     return { expanded: null };
@@ -71,3 +73,8 @@ var Content = React.createClass({
     )
   }
 });
+
+module.exports.Accordion = Accordion;
+module.exports.Section = Section;
+module.exports.Heading = Heading;
+module.exports.Content = Content;

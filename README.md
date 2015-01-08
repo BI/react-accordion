@@ -78,3 +78,19 @@ To Do
 * Content does something when you click on it
 * Fix clicking buttons in the Heading closing the accordion tab
 * Allow buttons in tags to do something when you click on them
+
+Notes on Webpack
+----------------
+
+* Make sure you have it installed `npm install webpack -g`
+* A `webpack.config.js` file makes running it easy.
+* You may need to install some loaders (like style and css) locally: `npm install css-loader style-loader`
+* You *will* need to install the jsx loader: `npm install jsx-loader`
+* Run `webpack` in the react-accordion directory. `webpack ./accordion.jsx bundle.js` if you didn't add the config flag
+* Adding the `--watch` flag automatically rebuilds the bundle on a change.
+* `--progress` and `--color` can help the build to look nice, but otherwise doesn't change anything.
+* You can run a webpack dev server locally
+  * `npm install webpack-dev-server -g` to install it.
+  * `webpack-dev-server` to run it. You can include flags, but `--watch` is automatically included.
+  * Changes should automatically update the page.
+  * go to http://localhost:8080/webpack-dev-server/bundle to look at the webserver page.
