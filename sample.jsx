@@ -1,12 +1,12 @@
-var RxAccordion = require("./accordion.jsx");
+var react_accordion = require("./accordion.jsx");
 
-var Accordion = RxAccordion.Accordion;
-var Section = RxAccordion.Section;
-var Heading = RxAccordion.Heading;
-var Content = RxAccordion.Content;
+var Accordion = react_accordion.Accordion;
+var Section = react_accordion.Section;
+var Heading = react_accordion.Heading;
+var Content = react_accordion.Content;
 
 React.render(
-  <Accordion expandMode={Accordion.ONE_OR_NONE} expandedSection={1}>
+  <Accordion>
     <Section>
       <Heading>Accordion Section 1</Heading>
       <Content>

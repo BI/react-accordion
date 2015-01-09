@@ -8,6 +8,10 @@ function getElementType(element) {
   return element.type.displayName;
 }
 
+var ONE_OR_NONE = 0;
+var ALWAYS_ONE = 1;
+var MULTIPLE = 2;
+
 var Accordion = React.createClass({
   propTypes: {
     expandMode: React.PropTypes.number,
@@ -28,7 +32,7 @@ var Accordion = React.createClass({
     var expanded = this.state.expanded;
     var expandMode = this.props.expandMode;
 
-    if(expandMode === Accordion.ALWAYS_ONE || expandMode === Accordion.ONE_OR_NONE) {
+    if(expandMode === ALWAYS_ONE || expandMode === ONE_OR_NONE) {
       expanded = {};
     }
 
@@ -83,10 +87,6 @@ var Accordion = React.createClass({
     );
   }
 });
-
-Accordion.ONE_OR_NONE = 0;
-Accordion.ALWAYS_ONE = 1;
-Accordion.MULTIPLE = 2;
 
 var Section = React.createClass({
   handleErrors: function() {
@@ -143,7 +143,7 @@ var Heading = React.createClass({
       return;
     }
     
-    if(expandMode == Accordion.ALWAYS_ONE) {
+    if(expandMode == ALWAYS_ONE) {
       return;
     }
 
@@ -168,3 +168,7 @@ module.exports.Accordion = Accordion;
 module.exports.Section = Section;
 module.exports.Heading = Heading;
 module.exports.Content = Content;
+
+module.exports.ONE_OR_NONE = ONE_OR_NONE;
+module.exports.ALWAYS_ONE = ALWAYS_ONE;
+module.exports.MULTIPLE = MULTIPLE;

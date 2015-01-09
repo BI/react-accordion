@@ -40,20 +40,19 @@
 /******/ 	return __webpack_require__(0);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ 0:
+/******/ ([
+/* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var RxAccordion = __webpack_require__(1);
+	var react_accordion = __webpack_require__(1);
 
-	var Accordion = RxAccordion.Accordion;
-	var Section = RxAccordion.Section;
-	var Heading = RxAccordion.Heading;
-	var Content = RxAccordion.Content;
+	var Accordion = react_accordion.Accordion;
+	var Section = react_accordion.Section;
+	var Heading = react_accordion.Heading;
+	var Content = react_accordion.Content;
 
 	React.render(
-	  React.createElement(Accordion, {expandMode: Accordion.ONE_OR_NONE, expandedSection: 1}, 
+	  React.createElement(Accordion, null, 
 	    React.createElement(Section, null, 
 	      React.createElement(Heading, null, "Accordion Section 1"), 
 	      React.createElement(Content, null, 
@@ -80,11 +79,10 @@
 	);
 
 /***/ },
-
-/***/ 1:
+/* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(4);
+	__webpack_require__(2);
 
 	function isElementType(element, expectedType) {
 	  return getElementType(element) == expectedType;
@@ -93,6 +91,10 @@
 	function getElementType(element) {
 	  return element.type.displayName;
 	}
+
+	var ONE_OR_NONE = 0;
+	var ALWAYS_ONE = 1;
+	var MULTIPLE = 2;
 
 	var Accordion = React.createClass({displayName: "Accordion",
 	  propTypes: {
@@ -114,7 +116,7 @@
 	    var expanded = this.state.expanded;
 	    var expandMode = this.props.expandMode;
 
-	    if(expandMode === Accordion.ALWAYS_ONE || expandMode === Accordion.ONE_OR_NONE) {
+	    if(expandMode === ALWAYS_ONE || expandMode === ONE_OR_NONE) {
 	      expanded = {};
 	    }
 
@@ -169,10 +171,6 @@
 	    );
 	  }
 	});
-
-	Accordion.ONE_OR_NONE = 0;
-	Accordion.ALWAYS_ONE = 1;
-	Accordion.MULTIPLE = 2;
 
 	var Section = React.createClass({displayName: "Section",
 	  handleErrors: function() {
@@ -229,7 +227,7 @@
 	      return;
 	    }
 	    
-	    if(expandMode == Accordion.ALWAYS_ONE) {
+	    if(expandMode == ALWAYS_ONE) {
 	      return;
 	    }
 
@@ -255,24 +253,26 @@
 	module.exports.Heading = Heading;
 	module.exports.Content = Content;
 
+	module.exports.ONE_OR_NONE = ONE_OR_NONE;
+	module.exports.ALWAYS_ONE = ALWAYS_ONE;
+	module.exports.MULTIPLE = MULTIPLE;
 
 /***/ },
-
-/***/ 4:
+/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(5);
+	var content = __webpack_require__(3);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
+	var update = __webpack_require__(4)(content, {});
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
-		module.hot.accept("!!C:\\Users\\sns12_000\\Desktop\\react-accordion\\node_modules\\css-loader\\index.js!C:\\Users\\sns12_000\\Desktop\\react-accordion\\webpack-files\\accordion-styles.css", function() {
-			var newContent = require("!!C:\\Users\\sns12_000\\Desktop\\react-accordion\\node_modules\\css-loader\\index.js!C:\\Users\\sns12_000\\Desktop\\react-accordion\\webpack-files\\accordion-styles.css");
+		module.hot.accept("!!/Users/stephensmith/Desktop/gitRepos/react-accordion/node_modules/css-loader/index.js!/Users/stephensmith/Desktop/gitRepos/react-accordion/webpack-files/accordion-styles.css", function() {
+			var newContent = require("!!/Users/stephensmith/Desktop/gitRepos/react-accordion/node_modules/css-loader/index.js!/Users/stephensmith/Desktop/gitRepos/react-accordion/webpack-files/accordion-styles.css");
 			if(typeof newContent === 'string') newContent = [module.id, newContent, ''];
 			update(newContent);
 		});
@@ -281,16 +281,14 @@
 	}
 
 /***/ },
-
-/***/ 5:
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(31)();
-	exports.push([module.id, ".accordion {\r\n\tborder: 1px black dashed;\r\n\tborder-radius: 5px;\r\n\tpadding: 5px;\r\n\twidth: 600px;\r\n}\r\n\r\n.accordion-heading {\r\n\tborder: 1px white solid;\r\n\tbackground-color: black;\r\n\tcolor: white;\r\n\tborder-radius: 10px;\r\n\tpadding: 1px 5px;\r\n}\r\n\r\n.accordion-content {\r\n\tborder: 1px black solid;\r\n\tborder-radius: 10px;\r\n\tpadding: 10px;\r\n}", ""]);
+	exports = module.exports = __webpack_require__(5)();
+	exports.push([module.id, ".accordion {\n\tborder: 1px black dashed;\n\tborder-radius: 5px;\n\tpadding: 5px;\n\twidth: 600px;\n}\n\n.accordion-heading {\n\tborder: 1px white solid;\n\tbackground-color: black;\n\tcolor: white;\n\tborder-radius: 10px;\n\tpadding: 1px 5px;\n}\n\n.accordion-content {\n\tborder: 1px black solid;\n\tborder-radius: 10px;\n\tpadding: 10px;\n}", ""]);
 
 /***/ },
-
-/***/ 6:
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -486,8 +484,7 @@
 
 
 /***/ },
-
-/***/ 31:
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	module.exports = function() {
@@ -508,5 +505,4 @@
 	}
 
 /***/ }
-
-/******/ })
+/******/ ])
