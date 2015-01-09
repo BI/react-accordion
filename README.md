@@ -9,7 +9,7 @@ First: You need to require the module in your file. Assign the require call resu
 
 Example: `var react_accordion = require("./accordion.jsx");`
 
-This variable will have everything you need (Accordion, Section, Heading, Content, and the three expandMode constants: ONE_OR_NONE, ALWAYS_ONE, MULTIPLE). For the tag names, you can use either a full path to it (`<react_accordion.Accordion>`) or make an alias for the variable like in the example below.
+This variable will have everything you need (Accordion, Section, Heading, Content, and the three expandMode constants: ONE\_OR\_NONE, ALWAYS_ONE, MULTIPLE). For the tag names, you can use either a full path to it (`<react_accordion.Accordion>`) or make an alias for the variable like in the example below.
 
 Fill out the Accordion's child components. The accordion tag should have only Section elements as children. The Section tag should have exactly one Heading and one Content as its children. Heading and content can have whatever contents you wish.
 
@@ -63,12 +63,12 @@ Main component; contains multiple Sections (and only Sections). Has first sectio
 ##### expandMode #####
 
 **Type:** Enum (number)  
-**Default:** react_accordion.ALWAYS_ONE  
+**Default:** react\_accordion.ALWAYS\_ONE  
 **Example:** `<Accordion expandMode={react_accordion.ONE_OR_NONE}>`
 
-* **react_accordion.ONE\_OR\_NONE:** Allows up to one section to be expanded at a time. All sections may be closed.
-* **react_accordion.ALWAYS_ONE:** Allows one section to be expanded. You may not close all expanded sections.
-* **react_accordion.MULTIPLE:** Any number of sections can be expaned or closed.
+* **react\_accordion.ONE\_OR\_NONE:** Allows up to one section to be expanded at a time. All sections may be closed.
+* **react\_accordion.ALWAYS\_ONE:** Allows one section to be expanded. You may not close all expanded sections.
+* **react\_accordion.MULTIPLE:** Any number of sections can be expaned or closed.
 
 ##### expandedSection #####
 
@@ -106,11 +106,12 @@ To Do
 Notes on Webpack
 ----------------
 
+These are mostly my notes to remember how to use webpack, but you may find them useful
+
 * Make sure you have it installed `npm install webpack -g`
 * A `webpack.config.js` file makes running it easy.
-* You may need to install some loaders (like style and css) locally: `npm install css-loader style-loader`
-* You *will* need to install the jsx loader: `npm install jsx-loader`
-* Run `webpack` in the react_accordion directory. `webpack ./accordion.jsx bundle.js` if you didn't add the config flag
+* Run `npm install` to install the necessary components (jsx-loader, css-loader, style-loader).
+* Run `webpack` in the react_accordion directory. `webpack ./<entry file>.jsx bundle.js` if you didn't add the config flag
 * Adding the `--watch` flag automatically rebuilds the bundle on a change.
 * `--progress` and `--color` can help the build to look nice, but otherwise doesn't change anything.
 * You can run a webpack dev server locally
@@ -118,5 +119,3 @@ Notes on Webpack
   * `webpack-dev-server` to run it. You can include flags, but `--watch` is automatically included.
   * Changes should automatically update the page.
   * go to http://localhost:8080/webpack-dev-server/bundle to look at the webserver page.
-* Fix clicking buttons in the Heading closing the accordion section
-* Allow buttons in tags to do something when you click on them
