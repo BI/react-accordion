@@ -1,5 +1,3 @@
-require("./webpack-files/accordion-styles.css");
-
 function isElementType(element, expectedType) {
   return getElementType(element) == expectedType;
 }
@@ -19,7 +17,7 @@ var Accordion = React.createClass({
   },
   getDefaultProps: function() {
     return {
-      expandMode: 1, //Accordion.ALWAYS_ONE
+      expandMode: ALWAYS_ONE,
       expandedSection: 0
     };
   },
@@ -40,7 +38,7 @@ var Accordion = React.createClass({
 
     this.setState({ expanded: expanded });
   },
-  handleErrors: function() {
+  componentWillMount: function() {
     if(this.props.children === null || this.props.children.length === 0) {
       throw new Error("No elements found in Accordion");
     }
@@ -64,8 +62,6 @@ var Accordion = React.createClass({
     }
   },
   render: function() {
-    this.handleErrors();
-
     var children = this.props.children;
 
     if(children.constructor !== Array) {
@@ -89,7 +85,7 @@ var Accordion = React.createClass({
 });
 
 var Section = React.createClass({
-  handleErrors: function() {
+  componentWillMount: function() {
     var errors = "";
 
     var id = this.props.id;
@@ -117,8 +113,6 @@ var Section = React.createClass({
     }
   },
   render: function() {
-    this.handleErrors();
-
   	var heading = this.props.children[0];
     var content = this.props.children[1];
 
