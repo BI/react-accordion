@@ -1,4 +1,5 @@
 var react_accordion = require("./accordion.jsx");
+require("./accordion-styles.css");
 
 var Accordion = react_accordion.Accordion;
 var Section = react_accordion.Section;

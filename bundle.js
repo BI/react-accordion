@@ -45,6 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var react_accordion = __webpack_require__(1);
+	__webpack_require__(2);
 
 	var Accordion = react_accordion.Accordion;
 	var Section = react_accordion.Section;
@@ -82,8 +83,6 @@
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(2);
-
 	function isElementType(element, expectedType) {
 	  return getElementType(element) == expectedType;
 	}
@@ -103,7 +102,7 @@
 	  },
 	  getDefaultProps: function() {
 	    return {
-	      expandMode: 1, //Accordion.ALWAYS_ONE
+	      expandMode: ALWAYS_ONE,
 	      expandedSection: 0
 	    };
 	  },
@@ -124,7 +123,7 @@
 
 	    this.setState({ expanded: expanded });
 	  },
-	  handleErrors: function() {
+	  componentWillMount: function() {
 	    if(this.props.children === null || this.props.children.length === 0) {
 	      throw new Error("No elements found in Accordion");
 	    }
@@ -148,8 +147,6 @@
 	    }
 	  },
 	  render: function() {
-	    this.handleErrors();
-
 	    var children = this.props.children;
 
 	    if(children.constructor !== Array) {
@@ -173,7 +170,7 @@
 	});
 
 	var Section = React.createClass({displayName: "Section",
-	  handleErrors: function() {
+	  componentWillMount: function() {
 	    var errors = "";
 
 	    var id = this.props.id;
@@ -201,8 +198,6 @@
 	    }
 	  },
 	  render: function() {
-	    this.handleErrors();
-
 	  	var heading = this.props.children[0];
 	    var content = this.props.children[1];
 
@@ -271,8 +266,8 @@
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
-		module.hot.accept("!!/Users/stephensmith/Desktop/gitRepos/react-accordion/node_modules/css-loader/index.js!/Users/stephensmith/Desktop/gitRepos/react-accordion/webpack-files/accordion-styles.css", function() {
-			var newContent = require("!!/Users/stephensmith/Desktop/gitRepos/react-accordion/node_modules/css-loader/index.js!/Users/stephensmith/Desktop/gitRepos/react-accordion/webpack-files/accordion-styles.css");
+		module.hot.accept("!!C:\\Users\\sns12_000\\Documents\\GitHub\\react-accordion\\node_modules\\css-loader\\index.js!C:\\Users\\sns12_000\\Documents\\GitHub\\react-accordion\\accordion-styles.css", function() {
+			var newContent = require("!!C:\\Users\\sns12_000\\Documents\\GitHub\\react-accordion\\node_modules\\css-loader\\index.js!C:\\Users\\sns12_000\\Documents\\GitHub\\react-accordion\\accordion-styles.css");
 			if(typeof newContent === 'string') newContent = [module.id, newContent, ''];
 			update(newContent);
 		});
@@ -285,7 +280,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(5)();
-	exports.push([module.id, ".accordion {\n\tborder: 1px black dashed;\n\tborder-radius: 5px;\n\tpadding: 5px;\n\twidth: 600px;\n}\n\n.accordion-heading {\n\tborder: 1px white solid;\n\tbackground-color: black;\n\tcolor: white;\n\tborder-radius: 10px;\n\tpadding: 1px 5px;\n}\n\n.accordion-content {\n\tborder: 1px black solid;\n\tborder-radius: 10px;\n\tpadding: 10px;\n}", ""]);
+	exports.push([module.id, ".accordion {\r\n\tborder: 1px black dashed;\r\n\tborder-radius: 5px;\r\n\tpadding: 5px;\r\n\twidth: 600px;\r\n}\r\n\r\n.accordion-heading {\r\n\tborder: 1px white solid;\r\n\tbackground-color: black;\r\n\tcolor: white;\r\n\tborder-radius: 10px;\r\n\tpadding: 1px 5px;\r\n}\r\n\r\n.accordion-content {\r\n\tborder: 1px black solid;\r\n\tborder-radius: 10px;\r\n\tpadding: 10px;\r\n}", ""]);
 
 /***/ },
 /* 4 */
