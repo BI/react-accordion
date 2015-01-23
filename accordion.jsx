@@ -1,3 +1,5 @@
+var React = require('react');
+
 function isElementType(element, expectedType) {
   return getElementType(element) == expectedType;
 }
@@ -37,6 +39,12 @@ var Accordion = React.createClass({
     expanded[expandedSectionId] = isExpanded;
 
     this.setState({ expanded: expanded });
+    
+    //supposedly React wraps the event, but it doesn't seem to be happening
+    //so we need both of these here.
+    event.stopPropagation();
+    event.preventDefault();
+    return false;
   },
   componentWillMount: function() {
     if(this.props.children === null || this.props.children.length === 0) {
@@ -145,7 +153,7 @@ var Heading = React.createClass({
   },
   render: function() {
     return (
-      <div className="accordion-heading" onClick={this.headingClicked}>{this.props.children}</div>
+      <div className="accordion-heading" onMouseDown={this.headingClicked}>{this.props.children}</div>
     )
   }
 });
