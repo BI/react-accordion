@@ -1,3 +1,4 @@
+var React = require("react");
 var react_accordion = require("./accordion.jsx");
 require("./accordion-styles.css");
 
