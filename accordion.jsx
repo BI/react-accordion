@@ -85,7 +85,10 @@ var Accordion = React.createClass({
     }, this);
     
     return (
-      <div className="accordion">
+      <div 
+        aria-multiselectable={this.props.expandMode === MULTIPLE}
+        className="accordion"
+      >
       	{sections}
       </div>
     );
@@ -127,7 +130,7 @@ var Section = React.createClass({
     return (
       <div className="accordion-section">
         <Heading clickHandler={this.props.clickHandler} id={this.props.id} expanded={this.props.expanded} expandMode={this.props.expandMode}>{heading.props.children}</Heading>
-        { this.props.expanded ? content : null }
+        { this.props.expanded ? <Content labelId={this.props.id}>{content.props.children}</Content> : null }
       </div>
     )
   
@@ -152,8 +155,17 @@ var Heading = React.createClass({
     this.props.clickHandler(id, false);
   },
   render: function() {
+    var message = (this.props.expanded ? "Expanded" : "Collapsed") + " accordion tab";
     return (
-      <div className="accordion-heading" onMouseDown={this.headingClicked}>{this.props.children}</div>
+      <a
+        aria-label={message}
+        role="tablist"
+        aria-expanded={this.props.expanded}
+        className="accordion-heading"
+        onMouseDown={this.headingClicked}
+      >
+          {this.props.children}
+      </a>
     )
   }
 });
@@ -161,7 +173,7 @@ var Heading = React.createClass({
 var Content = React.createClass({
   render: function() {
     return (
-      <div className="accordion-content">{this.props.children}</div>
+      <div role="tabpanel" aria-labelledby={this.props.labelId} className="accordion-content">{this.props.children}</div>
     )
   }
 });
