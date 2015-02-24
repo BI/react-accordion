@@ -11,6 +11,7 @@
 	color: white;
 	border-radius: 10px;
 	padding: 1px 5px;
+	display: block;
 }
 
 .accordion-content {
