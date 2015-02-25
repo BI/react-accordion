@@ -2,7 +2,7 @@
   "name": "react-accordion",
   "version": "1.0.1",
   "description": "Accordion web component using React and Webpack",
-  "main": "bundle.js",
+  "main": "accordion.jsx",
   "dependencies": {
     "css-loader": "^0.9.0",
     "jsx-loader": "^0.12.2",
