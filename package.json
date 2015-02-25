@@ -1,6 +1,6 @@
 {
   "name": "react-accordion",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Accordion web component using React and Webpack",
   "main": "bundle.js",
   "dependencies": {
