@@ -28,7 +28,7 @@ var Accordion = React.createClass({
     expanded[this.props.expandedSection] = true;
     return { expanded: expanded };
   },
-  expandSections: function(expandedSectionId, isExpanded) {
+  expandSections: function(expandedSectionId, isExpanded, event) {
     var expanded = this.state.expanded;
     var expandMode = this.props.expandMode;
 
@@ -87,8 +87,7 @@ var Accordion = React.createClass({
     return (
       <div 
         aria-multiselectable={this.props.expandMode === MULTIPLE}
-        className="accordion"
-      >
+        className="accordion">
       	{sections}
       </div>
     );
@@ -138,13 +137,13 @@ var Section = React.createClass({
 });
 
 var Heading = React.createClass({
-  headingClicked: function () {
+  headingClicked: function (event) {
     var expanded = this.props.expanded;
     var id = this.props.id;
     var expandMode = this.props.expandMode;
 
     if(!expanded) {
-      this.props.clickHandler(id, true);
+      this.props.clickHandler(id, true, event);
       return;
     }
     
@@ -152,7 +151,7 @@ var Heading = React.createClass({
       return;
     }
 
-    this.props.clickHandler(id, false);
+    this.props.clickHandler(id, false, event);
   },
   render: function() {
     var message = (this.props.expanded ? "Expanded" : "Collapsed") + " accordion tab";
