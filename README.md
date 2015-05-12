@@ -1,5 +1,5 @@
-react-accordion
-===============
+# react-accordion [![Build Status](https://travis-ci.org/BI/react-accordion.png)](https://travis-ci.org/BI/react-accordion)
+
 Accordion-style list component made in React. Allows for grouping data by sections and showing only some sections at a time. For an example, see [this demo](http://yeahbuthats.github.io/react-accordion/).
 
 Usage
