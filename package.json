@@ -4,6 +4,7 @@
   "description": "Accordion web component using React and Webpack",
   "main": "accordion.jsx",
   "dependencies": {
+    "coveralls": "^2.11.2",
     "css-loader": "^0.9.0",
     "jsx-loader": "^0.12.2",
     "react": "^0.12.2",
@@ -26,6 +27,7 @@
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react"
-    ]
+    ],
+    "collectCoverageOnlyFrom": {"accordion.jsx": true}
   }
 }
